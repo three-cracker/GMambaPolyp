@@ -4,8 +4,7 @@ import os
 import torch.nn as nn
 import argparse
 from datetime import datetime
-# from lib.GMambaPolyp import GMambaPolyp
-from lib.model_final_SS2D import GMambaPolyp
+from lib.model import GMambaPolyp
 from utils.dataloader import get_loader, test_dataset
 from utils.utils import clip_gradient, adjust_lr, AvgMeter,create_dir,print_and_save,epoch_time
 import torch.nn.functional as F
@@ -283,3 +282,4 @@ if __name__ == '__main__':
             train(train_loader, model, optimizer, epoch + 1, opt.test_path)
     except Exception as e:
         print(f"An error occurred: {e}")  # Debugging line
+
