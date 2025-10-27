@@ -4,7 +4,7 @@ import os
 import torch.nn as nn
 import argparse
 from datetime import datetime
-from lib.GMambaPolyp import GMambaPolyp
+from lib.model import GMambaPolyp
 from utils.utils import CalParams
 
 
@@ -15,4 +15,5 @@ if __name__ == '__main__':
     print(model) 
     input = torch.rand(1,3,352,352).to("cuda")
     CalParams(model,input)
+
 
