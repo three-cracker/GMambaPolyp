@@ -48,6 +48,9 @@ GMambaPolyp
         ├── edges
     ├── TestDataset
         ├── Kvasir
+            ├── images
+            ├── masks
+            ├── edges
         ├── CVC-ClinicDB
         ├── CVC-300
         ├── CVC-ColonDB
