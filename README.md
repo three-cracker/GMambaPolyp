@@ -13,12 +13,12 @@ Down the mamba code from [Google Driver](https://drive.google.com/drive/folders/
 ```html
 GMambaPolyp
 ├── lib
-├── ├── vmamba
-├── ├── ├── kernels
-├── ├── ├── mamba2
-├── ├── ├── vmunet.py
-├── ├── ├── ...
-├── ├── model.py
+    ├── vmamba
+        ├── kernels
+        ├── mamba2
+        ├── vmunet.py
+        ├── ...
+    ├── model.py
 ├── utils
 ```
 
@@ -42,16 +42,16 @@ Downloading training and testing datasets and move them into `./data/`.
 ```html
 GMambaPolyp
 ├── data
-├── ├── TrainDataset
-├── ├── ├── images
-├── ├── ├── masks
-├── ├── ├── edges
-├── ├── TestDataset
-├── ├── ├── Kvasir
-├── ├── ├── CVC-ClinicDB
-├── ├── ├── CVC-300
-├── ├── ├── CVC-ColonDB
-├── ├── ├── ETIS-LaribPolypDB
+    ├── TrainDataset
+        ├── images
+        ├── masks
+        ├── edges
+    ├── TestDataset
+        ├── Kvasir
+        ├── CVC-ClinicDB
+        ├── CVC-300
+        ├── CVC-ColonDB
+        ├── ETIS-LaribPolypDB
 ```
 
 ## ⏳Training
