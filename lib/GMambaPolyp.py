@@ -4,7 +4,6 @@ from mmcv.cnn import ConvModule
 from torch.nn import Conv2d
 import warnings
 import torch
-# from mmcv.cnn import constant_init, kaiming_init
 from torch import nn
 from lib.vmamba.vmuet import SS2D
 
@@ -74,7 +73,6 @@ class GCSS2D(nn.Module):
         super().__init__()
         self.ss2d = SS2D(in_ch, d_conv=d_conv, d_state=d_state)
         
-        # 轻量全局上下文 (GAP + 通道注意力)
         self.avgpool = nn.AdaptiveAvgPool2d(1)
 
         self.project = nn.Sequential(
@@ -84,10 +82,8 @@ class GCSS2D(nn.Module):
         )
         
     def forward(self, x):
-        # SS2D全局建模
         ss_out = self.ss2d(x)
         
-        # 全局上下文增强
         pool_max = self.avgpool(x)
         pool_max = F.interpolate(pool_max, size=ss_out.size()[2:], mode='bilinear', align_corners=False)
 
@@ -113,16 +109,15 @@ class RCSA(nn.Module):
     def forward(self, x):
         channel_att = self.channel_att(x)
         spatial_att = self.spatial_att(x)
-        att = channel_att * spatial_att  # 组合注意力
-        return x * att + x  # 残差连接
+        att = channel_att * spatial_att
+        return x * att + x
 
 class MSSSM(nn.Module):
     def __init__(self, in_channels, branch_ratio=0.25):
         super().__init__()
         gc = int(in_channels * branch_ratio)
-        self.split_indexes = (in_channels-3*gc, gc, gc, gc)  # 注意顺序改变
-        
-        # 多尺度特征提取分支
+        self.split_indexes = (in_channels-3*gc, gc, gc, gc)
+
         self.conv1 = nn.Sequential(
             nn.Conv2d(in_channels - 3 * gc, in_channels - 3 * gc, 3, padding=1, bias=False),
             nn.BatchNorm2d(in_channels - 3 * gc),
@@ -152,7 +147,6 @@ class MSSSM(nn.Module):
     def forward(self, x):
         x_1, x_2, x_3, x_4 = torch.split(x, self.split_indexes, dim=1)
         
-        # 处理各分支
         out1 = self.conv1(x_1)
         out2 = self.conv2(x_2)
         x_3 = x_3 + x_1
@@ -162,11 +156,9 @@ class MSSSM(nn.Module):
 
         fused = torch.cat([out1, out2, out3, out4], dim=1)
         
-        # 添加全局上下文
         global_feat = self.global_pool(x)
         global_feat = F.interpolate(global_feat, size=fused.shape[2:], mode='bilinear', align_corners=False)
         
-        # 残差连接
         y = torch.cat([fused, global_feat], dim=1)
 
         y = x + self.project(y)
@@ -218,7 +210,7 @@ class GMambaPolyp(nn.Module):
         super(GMambaPolyp, self).__init__()
 
         self.backbone = pvt_v2_b2()  # [64, 128, 320, 512]
-        path = '/home/featurize/work/.ssh/PGCF/lib/pvt_v2_b2.pth'
+        path = './lib/pvt_v2_b2.pth'
         save_model = torch.load(path)
         model_dict = self.backbone.state_dict()
         state_dict = {k: v for k, v in save_model.items() if k in model_dict.keys()}
