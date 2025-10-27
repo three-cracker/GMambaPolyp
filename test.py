@@ -3,7 +3,7 @@ import torch.nn.functional as F
 import numpy as np
 import os, argparse
 import cv2
-from lib.model_final import GMambaPolyp
+from lib.model import GMambaPolyp
 from utils.dataloader import test_dataset
 import torch.nn as nn
 
@@ -60,4 +60,5 @@ for _data_name in dataset:
         res = (res - res.min()) / (res.max() - res.min() + 1e-8)
 
         cv2.imwrite(save_path+name, res*255)
+
 
