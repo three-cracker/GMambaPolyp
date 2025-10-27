@@ -17,7 +17,6 @@ dataset = ['CVC-300', 'CVC-ClinicDB', 'CVC-ColonDB', 'ETIS-LaribPolypDB', 'Kvasi
 
 def find_files_with_prefix(directory, prefix):  
     matching_files = []  
-    # 遍历指定目录  
     for filename in os.listdir(directory):  
         if filename.startswith(prefix):  
             matching_files.append(filename)  
@@ -61,3 +60,4 @@ for _data_name in dataset:
         res = (res - res.min()) / (res.max() - res.min() + 1e-8)
 
         cv2.imwrite(save_path+name, res*255)
+
