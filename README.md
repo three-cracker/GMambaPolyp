@@ -1,6 +1,7 @@
 <div align="center">
 <h1>GMambaPolyp</h1>
 <h3>GMambaPolyp:  A State-Space Model Network with Global Context Awareness and Noise-Robust Feature Fusion for Polyp Segmentation</h3>
+</div>
 
 
 ## 🛠Setup
