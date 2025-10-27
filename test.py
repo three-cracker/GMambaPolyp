@@ -13,12 +13,7 @@ device = torch.device('cuda:0')
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--testsize', type=int, default=352, help='testing size')
-# path = '/home/featurize/work/.ssh/PGCF/checkpoint_dw+scsa/train_doublebest_CVC-300.pth'
 dataset = ['CVC-300', 'CVC-ClinicDB', 'CVC-ColonDB', 'ETIS-LaribPolypDB', 'Kvasir']
-# dataset = ['CVC-ColonDB', 'Kvasir']
-# dataset = ['CVC-ClinicDB']
-# dataset = ['Kvasir']
-
 
 def find_files_with_prefix(directory, prefix):  
     matching_files = []  
@@ -31,10 +26,9 @@ def find_files_with_prefix(directory, prefix):
 
 
 for _data_name in dataset:
-    path = '/home/featurize/work/.ssh/PGCF/checkpoint_MambaPolypNet/train_doublebest_{}.pth'.format(_data_name)
-    # path = '/home/featurize/work/.ssh/PGCF/checkpoint_pranet/PraNet-19.pth'.format(_data_name)
-    data_path = '/home/featurize/work/.ssh/PGCF/TestDataset/{}/'.format(_data_name)
-    save_path = '/home/featurize/work/.ssh/PGCF/result_GMambaPolyp/{}/'.format(_data_name)
+    path = './data/checkpoint/train_doublebest_{}.pth'.format(_data_name)
+    data_path = './data/TestDataset/{}/'.format(_data_name)
+    save_path = './result/{}/'.format(_data_name)
     opt = parser.parse_args()
     model = GMambaPolyp().to(device_ids[0])
     # model = PraNet().to(device_ids[0])
@@ -65,4 +59,5 @@ for _data_name in dataset:
         res = F.upsample(res, size=gt.shape, mode='bilinear', align_corners=False)
         res = res.sigmoid().data.cpu().numpy().squeeze()
         res = (res - res.min()) / (res.max() - res.min() + 1e-8)
+
         cv2.imwrite(save_path+name, res*255)
