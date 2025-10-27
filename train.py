@@ -212,15 +212,15 @@ if __name__ == '__main__':
                         default=30, help='every n epochs decay learning rate')
 
     parser.add_argument('--train_path', type=str,
-                        default='/home/featurize/work/.ssh/PGCF/TrainDatasetEdges',
+                        default='./data/TrainDataset',
                         help='path to train dataset')
 
     parser.add_argument('--test_path', type=str,
-                        default='/home/featurize/work/.ssh/PGCF/TestDataset',
+                        default='./data/TestDataset',
                         help='path to testing Kvasir dataset')
 
     parser.add_argument('--train_save', type=str,
-                        default='/home/featurize/work/.ssh/PGCF/checkpoint_GMambaPolyp/')
+                        default='./data/checkpoint/')
 
     opt = parser.parse_args()
 
@@ -244,7 +244,7 @@ if __name__ == '__main__':
 
     create_dir("logs")
     """ Training logfile """
-    train_log_path = "logs/train_logger_model_GMambaPolyp.txt"
+    train_log_path = "./logs/train_logger.txt"
     if os.path.exists(train_log_path):
         print("Log file exists")
     else:
