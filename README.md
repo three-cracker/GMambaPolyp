@@ -24,7 +24,7 @@ GMambaPolyp
 
 #### 2. Environment
 
-```python
+```html
 conda create -n gmamba-polyp python=3.10
 conda activate gmamba-polyp
 cd GMambaPolyp
@@ -56,13 +56,13 @@ GMambaPolyp
 
 ## ⏳Training
 
-```python
+```html
 python train.py
 ```
 
 ## 🔖Testing
 
-```python
+```html
 python test.py
 ```
 
