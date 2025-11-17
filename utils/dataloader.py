@@ -175,24 +175,15 @@ class PolypDataset(data.Dataset):
         return self.size
 
 
-def get_loader(image_root, gt_root, batchsize, trainsize, shuffle=True, num_workers=4, pin_memory=True, augmentation=False, seed=42):
+def get_loader(image_root, gt_root, batchsize, trainsize, shuffle=True, num_workers=4, pin_memory=True, augmentation=False):
 
-    dataset = PolypDataset(image_root, gt_root, trainsize, augmentation, seed=seed)
-    # dataset = Data(image_root, gt_root)
-    def worker_init_fn(worker_id):
-        # 每个worker的种子 = 主进程种子 + worker_id，避免多进程随机冲突
-        worker_seed = seed + worker_id
-        random.seed(worker_seed)
-        np.random.seed(worker_seed)
-        torch.manual_seed(worker_seed)
-        torch.cuda.manual_seed(worker_seed)
+    dataset = PolypDataset(image_root, gt_root, trainsize, augmentation)
 
     data_loader = data.DataLoader(dataset=dataset,
                                   batch_size=batchsize,
                                   shuffle=shuffle,
                                   num_workers=num_workers,
-                                  pin_memory=pin_memory,)
-                                #   worker_init_fn=worker_init_fn)
+                                  pin_memory=pin_memory)
     return data_loader
 
 
@@ -231,3 +222,4 @@ class test_dataset:
         with open(path, 'rb') as f:
             img = Image.open(f)
             return img.convert('L')
+
